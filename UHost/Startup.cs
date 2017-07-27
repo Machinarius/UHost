@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using UHost.Data;
-using UHost.Models;
-using UHost.Services;
+using Microsoft.Extensions.Options;
 
 namespace UHost {
   public class Startup {
@@ -30,19 +29,21 @@ namespace UHost {
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
-      // Add framework services.
-      services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-      services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders();
+      services.Configure<AzureADB2COptions>(Configuration.GetSection("Authentication:AzureADB2C"));
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
       services.AddMvc();
 
-      // Add application services.
-      services.AddTransient<IEmailSender, AuthMessageSender>();
-      services.AddTransient<ISmsSender, AuthMessageSender>();
+      services.AddDistributedMemoryCache();
+      services.AddSession(options => {
+        options.IdleTimeout = TimeSpan.FromHours(1);
+        options.CookieHttpOnly = true;
+      });
+
+      services.AddAuthentication(
+          sharedOptions => sharedOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
+
+      services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, OpenIdConnectOptionsSetup>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +53,6 @@ namespace UHost {
 
       if (env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
-        app.UseDatabaseErrorPage();
         app.UseBrowserLink();
       } else {
         app.UseExceptionHandler("/Home/Error");
@@ -60,7 +60,11 @@ namespace UHost {
 
       app.UseStaticFiles();
 
-      app.UseIdentity();
+      app.UseSession();
+
+      app.UseCookieAuthentication();
+
+      app.UseOpenIdConnectAuthentication();
 
       // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
