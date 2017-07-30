@@ -82,9 +82,9 @@ namespace UHost.UITests.B2CUserManagement {
       request.Content = new StringContent(userRequestPayload, Encoding.UTF8, "application/json");
 
       var response = await httpClient.SendAsync(request);
+      var responseContent = await response.Content.ReadAsStringAsync();
       response.EnsureSuccessStatusCode();
 
-      var responseContent = await response.Content.ReadAsStringAsync();
       var responseObject = JsonConvert.DeserializeObject<JObject>(responseContent);
       adUserId = responseObject["objectId"].ToString();
     }
