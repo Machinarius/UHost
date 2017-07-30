@@ -21,7 +21,7 @@ namespace UHost.UITests.Support {
         WindowStyle = ProcessWindowStyle.Normal
       };
       appPSI.EnvironmentVariables.Add("ASPNETCORE_URLS", AppUrl);
-      appPSI.EnvironmentVariables.Add("ASPNETCORE_ENVIRONMENT", "Development");
+      appPSI.EnvironmentVariables.Add("ASPNETCORE_ENVIRONMENT", "Testing");
 
       var appProcess = Process.Start(appPSI);
       var chromeDriver = new ChromeDriver();

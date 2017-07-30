@@ -12,7 +12,6 @@ namespace UHost.UITests.B2CUserManagement {
     public string EmailAddress { get; }
     public string Password { get; }
     public string Name { get; }
-    public string DisplayName { get; }
 
     private string adUserId;
 
@@ -21,11 +20,11 @@ namespace UHost.UITests.B2CUserManagement {
 
     private HttpClient httpClient;
 
-    public B2CUser() : this("testuser@test.com", "testpassword", "Test User", "testUser") {
+    public B2CUser() : this("testuser@test.com", "testpassword", "Test User") {
       InitClient();
     }
 
-    public B2CUser(string emailAddress, string password, string name, string displayName) {
+    public B2CUser(string emailAddress, string password, string name) {
       if (string.IsNullOrEmpty(emailAddress)) {
         throw new ArgumentNullException(nameof(emailAddress));
       }
@@ -38,14 +37,9 @@ namespace UHost.UITests.B2CUserManagement {
         throw new ArgumentNullException(nameof(name));
       }
 
-      if (string.IsNullOrEmpty(displayName)) {
-        throw new ArgumentNullException(nameof(displayName));
-      }
-
       EmailAddress = emailAddress;
       Password = password;
       Name = name;
-      DisplayName = displayName;
 
       InitClient();
     }

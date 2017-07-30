@@ -14,7 +14,7 @@ namespace UHost.UITests {
 
     [Fact]
     public async Task SigningInShouldIdentifyMeAsAUserInThePlatformAsync() {
-      testUser = new B2CUser("carlos@test.com", "carlosIsGreat123", "Carlos Quintero", "cQuintero");
+      testUser = new B2CUser("carlos@test.com", "carlosIsGreat123", "Carlos Quintero");
       await testUser.RegisterAsync();
       
       appHandle = AppSource.GenerateWebDriver();
