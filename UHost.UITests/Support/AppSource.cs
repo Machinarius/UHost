@@ -28,7 +28,8 @@ namespace UHost.UITests.Support {
         WorkingDirectory = appLocation,
         UseShellExecute = false,
         RedirectStandardInput = true,
-        WindowStyle = ProcessWindowStyle.Normal
+        RedirectStandardError = true,
+        RedirectStandardOutput = true
       };
       appPSI.EnvironmentVariables.Add("ASPNETCORE_URLS", AppUrl);
       appPSI.EnvironmentVariables.Add("ASPNETCORE_ENVIRONMENT", "Testing");
