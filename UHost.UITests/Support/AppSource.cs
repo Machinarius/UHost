@@ -35,7 +35,7 @@ namespace UHost.UITests.Support {
       appPSI.EnvironmentVariables.Add("ASPNETCORE_ENVIRONMENT", "Testing");
 
       var appProcess = Process.Start(appPSI);
-      Thread.Sleep(TimeSpan.FromSeconds(2));
+      Thread.Sleep(TimeSpan.FromSeconds(5));
 
       webDriver.Navigate().GoToUrl(AppUrl);
 

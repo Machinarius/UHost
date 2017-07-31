@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
 using OpenQA.Selenium;
 
 namespace UHost.UITests.Support {
@@ -22,13 +24,12 @@ namespace UHost.UITests.Support {
     }
 
     public void Dispose() {
-      WebDriver.Dispose();
+      var webClient = new WebClient();
+      webClient.DownloadString(AppSource.AppUrl + "TestingHooks/Shutdown");
+      appProcess.WaitForExit();
 
-      try {
-        appProcess.Kill();
-      } catch (InvalidOperationException) {
-        Debug.WriteLine("Ignoring an InvalidOperationException");
-      }
+      WebDriver.Dispose();
+      webClient.Dispose();
     }
   }
 }
