@@ -11,6 +11,18 @@ namespace UHost.UITests.Support {
     public const string AppUrl = "http://localhost:5000/";
 
     public static AppHandle GenerateWebDriver() {
+      var appLocation = typeof(AppSource).Assembly.Location;
+      appLocation = Path.Combine(appLocation, "..", "..", "..", "..", "..", "UHost");
+      appLocation = Path.GetFullPath(appLocation);
+
+      var appPSI = new ProcessStartInfo("dotnet", "run") {
+        WorkingDirectory = appLocation,
+        UseShellExecute = false
+      };
+      appPSI.EnvironmentVariables.Add("ASPNETCORE_URLS", AppUrl);
+      appPSI.EnvironmentVariables.Add("ASPNETCORE_ENVIRONMENT", "Testing");
+
+      var appProcess = Process.Start(appPSI);
       IWebDriver webDriver;
 
       var inCIServer = !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TF_BUILD"));
@@ -19,24 +31,10 @@ namespace UHost.UITests.Support {
       } else {
         webDriver = new ChromeDriver();
       }
+      webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+      webDriver.Manage().Window.Size = new System.Drawing.Size(1000, 800);
 
-      var appLocation = typeof(AppSource).Assembly.Location;
-      appLocation = Path.Combine(appLocation, "..", "..", "..", "..", "..", "UHost");
-      appLocation = Path.GetFullPath(appLocation);
-
-      var appPSI = new ProcessStartInfo("dotnet", "run") {
-        WorkingDirectory = appLocation,
-        UseShellExecute = false,
-        RedirectStandardInput = true,
-        RedirectStandardError = true,
-        RedirectStandardOutput = true
-      };
-      appPSI.EnvironmentVariables.Add("ASPNETCORE_URLS", AppUrl);
-      appPSI.EnvironmentVariables.Add("ASPNETCORE_ENVIRONMENT", "Testing");
-
-      var appProcess = Process.Start(appPSI);
-      Thread.Sleep(TimeSpan.FromSeconds(5));
-
+      Thread.Sleep(TimeSpan.FromSeconds(2));
       webDriver.Navigate().GoToUrl(AppUrl);
 
       var handle = new AppHandle(webDriver, appProcess);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
 using OpenQA.Selenium;
 
 namespace UHost.UITests.Support {
