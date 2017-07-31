@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using UHost.UITests.B2CUserManagement;
@@ -39,6 +40,8 @@ namespace UHost.UITests.Tests {
     } 
 
     public void Dispose() {
+      webDriver.DumpScreenshot();
+
       testUser?.CleanupAsync().Wait();
       appHandle?.Dispose();
     }

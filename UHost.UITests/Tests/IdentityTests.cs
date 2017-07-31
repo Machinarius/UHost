@@ -4,13 +4,14 @@ using OpenQA.Selenium;
 using UHost.UITests.B2CUserManagement;
 using UHost.UITests.Pages;
 using UHost.UITests.Support;
+using UHost.UITests.Utility;
 using Xunit;
 
 namespace UHost.UITests {
   public class IdentityTests : IDisposable {
     B2CUser testUser;
     AppHandle appHandle;
-    IWebDriver driver;
+    IWebDriver webDriver;
 
     [Fact]
     public async Task SigningInShouldIdentifyMeAsAUserInThePlatformAsync() {
@@ -18,13 +19,15 @@ namespace UHost.UITests {
       await testUser.RegisterAsync();
       
       appHandle = AppSource.GenerateWebDriver();
-      driver = appHandle.WebDriver;
+      webDriver = appHandle.WebDriver;
 
-      var loginPage = new LoginPage(driver);
+      var loginPage = new LoginPage(webDriver);
       loginPage.Login(testUser);
     }
     
     public void Dispose() {
+      webDriver.DumpScreenshot();
+
       testUser?.CleanupAsync().Wait();
       appHandle?.Dispose();
     }
