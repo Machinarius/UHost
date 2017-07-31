@@ -23,7 +23,12 @@ namespace UHost.UITests.Support {
 
     public void Dispose() {
       WebDriver.Dispose();
-      appProcess.Kill();
+
+      try {
+        appProcess.Kill();
+      } catch (InvalidOperationException) {
+        Debug.WriteLine("Ignoring an InvalidOperationException");
+      }
     }
   }
 }

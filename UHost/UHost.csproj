@@ -32,7 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Services\" />
+    <Folder Include="Views\Files\" />
     <Folder Include="Views\Session\" />
   </ItemGroup>
 
