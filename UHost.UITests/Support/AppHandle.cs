@@ -23,7 +23,7 @@ namespace UHost.UITests.Support {
 
     public void Dispose() {
       WebDriver.Dispose();
-      appProcess.Dispose();
+      appProcess.Kill();
     }
   }
 }
