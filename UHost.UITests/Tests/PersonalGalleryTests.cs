@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using UHost.UITests.B2CUserManagement;
@@ -7,14 +6,18 @@ using UHost.UITests.Pages;
 using UHost.UITests.Support;
 using UHost.UITests.Utility;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace UHost.UITests.Tests {
   public class PersonalGalleryTests : IDisposable {
     private AppHandle appHandle;
     private IWebDriver webDriver;
     private B2CUser testUser;
+    private ITestOutputHelper output;
 
-    public PersonalGalleryTests() {
+    public PersonalGalleryTests(ITestOutputHelper output) {
+      this.output = output;
+
       appHandle = AppSource.GenerateWebDriver();
       webDriver = appHandle.WebDriver;
     }
@@ -40,7 +43,7 @@ namespace UHost.UITests.Tests {
     } 
 
     public void Dispose() {
-      webDriver.DumpScreenshot();
+      webDriver.DumpScreenshot(output);
 
       testUser?.CleanupAsync().Wait();
       appHandle?.Dispose();
