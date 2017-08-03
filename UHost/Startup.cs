@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using UHost.Authentication;
+using UHost.Services.LocalServices.Configuration;
 
 namespace UHost {
   public class Startup {
@@ -22,10 +24,13 @@ namespace UHost {
       }
 
       builder.AddEnvironmentVariables();
+
       Configuration = builder.Build();
+      HostingEnvironment = env;
     }
 
-    public IConfigurationRoot Configuration { get; }
+    private IConfigurationRoot Configuration { get; }
+    private IHostingEnvironment HostingEnvironment { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
@@ -44,6 +49,10 @@ namespace UHost {
           sharedOptions => sharedOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
       services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, OpenIdConnectOptionsSetup>();
+
+      if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsEnvironment("Testing")) {
+        services.UseLocalServices();
+      }
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

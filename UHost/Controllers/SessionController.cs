@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Http.Features.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using UHost.Authentication;
 
 namespace UHost.Controllers {
   public class SessionController : Controller {

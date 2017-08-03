@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -8,9 +7,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
-using UHost.Models;
 
-namespace UHost {
+namespace UHost.Authentication {
   internal class OpenIdConnectOptionsSetup : IConfigureOptions<OpenIdConnectOptions> {
     public OpenIdConnectOptionsSetup(IOptions<AzureADB2COptions> b2cOptions) {
       B2COptions = b2cOptions.Value;
@@ -66,11 +64,11 @@ namespace UHost {
       // Extract the code from the response notification
       var code = context.ProtocolMessage.Code;
 
-      string signedInUserID = context.Ticket.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
-      TokenCache userTokenCache = new MSALSessionCache(signedInUserID, context.HttpContext).GetMsalCacheInstance();
-      ConfidentialClientApplication cca = new ConfidentialClientApplication(B2COptions.ClientId, B2COptions.Authority, B2COptions.RedirectUri, new ClientCredential(B2COptions.ClientSecret), userTokenCache, null);
+      var signedInUserID = context.Ticket.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
+      var userTokenCache = new MSALSessionCache(signedInUserID, context.HttpContext).GetMsalCacheInstance();
+      var cca = new ConfidentialClientApplication(B2COptions.ClientId, B2COptions.Authority, B2COptions.RedirectUri, new ClientCredential(B2COptions.ClientSecret), userTokenCache, null);
 
-      AuthenticationResult result = await cca.AcquireTokenByAuthorizationCodeAsync(code, B2COptions.ApiScopes.Split(' '));
+      var result = await cca.AcquireTokenByAuthorizationCodeAsync(code, B2COptions.ApiScopes.Split(' '));
       context.HandleCodeRedemption(result.AccessToken, result.IdToken);
     }
   }

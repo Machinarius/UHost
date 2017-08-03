@@ -12,6 +12,7 @@
     <UserSecretsId>aspnet-UHost-77c0c563-412a-406d-b617-312b3830c25d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LiteDB" Version="3.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />

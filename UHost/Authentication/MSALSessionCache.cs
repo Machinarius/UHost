@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Client;
 
-namespace UHost.Models {
+namespace UHost.Authentication {
   public class MSALSessionCache {
     private static ReaderWriterLockSlim SessionLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 

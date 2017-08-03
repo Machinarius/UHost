@@ -1,4 +1,4 @@
-﻿namespace UHost {
+﻿namespace UHost.Authentication {
   public class AzureADB2COptions {
     public const string PolicyAuthenticationProperty = "Policy";
 

@@ -18,13 +18,7 @@ namespace UHost.UITests.Utility {
       }
 
       var screenshotsFolder = "Screenshots";
-      var agentWorkFolder = Environment.GetEnvironmentVariable("AGENT_WORKFOLDER");
-      if (string.IsNullOrEmpty(agentWorkFolder)) {
-        screenshotsFolder = Path.Combine(agentWorkFolder, screenshotsFolder);
-      }
-
       if (!Directory.Exists(screenshotsFolder)) {
-        Directory.Delete(screenshotsFolder, true);
         Directory.CreateDirectory(screenshotsFolder);
       }
 
