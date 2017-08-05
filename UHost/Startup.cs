@@ -49,6 +49,7 @@ namespace UHost {
           sharedOptions => sharedOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
       services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, OpenIdConnectOptionsSetup>();
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
       if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsEnvironment("Testing")) {
         services.UseLocalServices();
@@ -78,7 +79,7 @@ namespace UHost {
       app.UseMvc(routes => {
         routes.MapRoute(
             name: "default",
-            template: "{controller=Home}/{action=Index}/{id?}");
+            template: "{controller=Files}/{action=Mine}/{id?}");
       });
     }
   }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using LiteDB;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,9 +12,14 @@ namespace UHost.Services.LocalServices.Configuration {
         throw new ArgumentNullException(nameof(services));
       }
 
+      if (!Directory.Exists("Data")) {
+        Directory.CreateDirectory("Data");
+      }
+
       var database = new LiteDatabase(DatabaseFilename);
       services.AddSingleton(database);
       services.AddTransient<IHostedFilesService, LiteDBHostedFilesService>();
+      services.AddTransient<IFileStorageService, LocalFileSystemFileStorageService>();
     }
   }
 }

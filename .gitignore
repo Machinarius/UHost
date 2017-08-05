@@ -262,4 +262,4 @@ __pycache__/
 
 # bower dependencies
 **/wwwroot/lib/*
-/UHost/Data/UHost.db
+/UHost/Data

@@ -3,6 +3,12 @@
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Tests\Assets\EafitLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\Assets\EafitLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.2" />
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
@@ -17,5 +23,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Tests\Assets\EafitLogo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

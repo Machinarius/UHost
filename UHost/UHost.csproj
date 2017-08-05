@@ -11,6 +11,10 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-UHost-77c0c563-412a-406d-b617-312b3830c25d</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\fileUpload.js" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="3.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
