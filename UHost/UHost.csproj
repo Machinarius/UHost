@@ -10,6 +10,7 @@
 
   <PropertyGroup>
     <UserSecretsId>aspnet-UHost-77c0c563-412a-406d-b617-312b3830c25d</UserSecretsId>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
