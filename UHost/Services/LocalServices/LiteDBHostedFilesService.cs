@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LiteDB;
 using UHost.Models;
-using UHost.Services.Database;
+using UHost.Services.LocalServices;
 using UHost.Services.Exceptions;
 
 namespace UHost.Services.LocalServices {

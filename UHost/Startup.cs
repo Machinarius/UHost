@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UHost.Authentication;
 using UHost.Services.LocalServices.Configuration;
+using UHost.Services.RemoteServices.Configuration;
 
 namespace UHost {
   public class Startup {
@@ -51,8 +52,12 @@ namespace UHost {
       services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, OpenIdConnectOptionsSetup>();
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-      if (HostingEnvironment.IsDevelopment() || HostingEnvironment.IsEnvironment("Testing")) {
+      if (HostingEnvironment.IsDevelopment() || 
+          HostingEnvironment.IsEnvironment("Testing")) {
         services.UseLocalServices();
+      } else {
+        services.Configure<AzureServicesConfiguration>(Configuration.GetSection("AzureServices"));
+        services.UseAzureServices();
       }
     }
 
@@ -65,7 +70,7 @@ namespace UHost {
         app.UseDeveloperExceptionPage();
         app.UseBrowserLink();
       } else {
-        app.UseExceptionHandler("/Home/Error");
+        app.UseExceptionHandler("/");
       }
 
       app.UseStaticFiles();

@@ -4,7 +4,7 @@ using UHost.Services.Results;
 
 namespace UHost.Services {
   public interface IFileStorageService {
-    Task<FileStoreResult> StoreFileAsync(Stream fileStream, string suggestedName = null);
+    Task<FileStoreResult> StoreFileAsync(Stream fileStream, string contentType = null, string suggestedName = null);
     Task<string> GetFileUrlAsync(string fileSlug);
   }
 }

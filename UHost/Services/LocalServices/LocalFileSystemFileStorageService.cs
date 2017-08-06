@@ -24,7 +24,7 @@ namespace UHost.Services.LocalServices {
       return Task.FromResult(fileUrl);
     }
 
-    public async Task<FileStoreResult> StoreFileAsync(Stream fileStream, string suggestedName = null) {
+    public async Task<FileStoreResult> StoreFileAsync(Stream fileStream, string contentType = null, string suggestedName = null) {
       if (fileStream == null) {
         throw new ArgumentNullException(nameof(fileStream));
       }
