@@ -1,6 +1,7 @@
 FROM microsoft/aspnetcore:1.1
-ARG source
 WORKDIR /app
-EXPOSE 80
-COPY ${source:-obj/Docker/publish} .
+EXPOSE 5000
+COPY ./publish .
+ENV ASPNETCORE_URLS="http://*:5000"
+ENV ASPNETCORE_ENVIRONMENT="Staging"
 ENTRYPOINT ["dotnet", "UHost.dll"]
