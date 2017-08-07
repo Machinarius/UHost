@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -58,6 +59,14 @@ namespace UHost {
       } else {
         services.Configure<AzureServicesConfiguration>(Configuration.GetSection("AzureServices"));
         services.UseAzureServices();
+      }
+
+      var sslCertFile = Environment.GetEnvironmentVariable("SSL_CERT_FILE");
+      var sslCertPassword = Environment.GetEnvironmentVariable("SSL_CERT_PASSWORD");
+      if (!string.IsNullOrEmpty(sslCertFile) && !string.IsNullOrEmpty(sslCertPassword)) {
+        services.Configure<KestrelServerOptions>(options => {
+          options.UseHttps(sslCertFile, sslCertPassword);
+        });
       }
     }
 
